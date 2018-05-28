@@ -1,0 +1,11 @@
+{
+  "name": "Rolling Bookmarks",
+  "version": "1.0",
+  "description": "Bookmarks that roll",
+  "permissions": ["bookmarks", "storage"],
+  "background": {
+    "scripts": ["bookmarks.js"],
+    "persistent": false
+  },
+  "manifest_version": 2
+}
