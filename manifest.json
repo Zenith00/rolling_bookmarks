@@ -2,7 +2,7 @@
   "name": "Rolling Bookmarks",
   "version": "1.0",
   "description": "Bookmarks that roll",
-  "permissions": ["bookmarks", "storage", "contextMenus"],
+  "permissions": ["bookmarks", "storage", "contextMenus", "history"],
   "background": {
     "scripts": ["bookmarks.js"],
     "persistent": false
