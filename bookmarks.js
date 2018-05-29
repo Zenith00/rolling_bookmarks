@@ -24,7 +24,9 @@ function secondDump() {
         console.log(res.title);
         subparent = res;
         while (subparent.parentId){
-            subparent = chrome.bookmarks.get(subparent.parentId)
+            chrome.bookmarks.get(subparent.parentId, function(newParent){
+                subparent = newParent;
+            });
             console.log(subparent.title);
         }
         console.log("Final Node:");
