@@ -3,7 +3,7 @@
 function onClickHandler(info, tab) {
     chrome.extension.getBackgroundPage().console.log(info);
     if (info.menuItemId == "dumpbookmarks"){
-        dumpBookmarks();
+        // dumpBookmarks();
         secondDump();
     }
 };
@@ -19,6 +19,9 @@ chrome.runtime.onInstalled.addListener(function() {
 function secondDump() {
     var subparent;
     var startNode = chrome.bookmarks.getRecent(1, function(res){
+        res = res[0];
+        console.log(res.id);
+        console.log(res.title);
         subparent = res;
         while (subparent.parentId){
             subparent = chrome.bookmarks.get(subparent.parentId)
