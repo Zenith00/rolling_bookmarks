@@ -1,13 +1,10 @@
-chrome.contextMenus.create({
-    id: 'open',
-    title: chrome.i18n.getMessage('openContextMenuTitle'),
-    contexts: ['link'],
-});
+;
 
 function onClickHandler(info, tab) {
-    console.log(info);
+    chrome.extension.getBackgroundPage().console.log(info);
     if (info.menuItemId == "dumpbookmarks"){
         dumpBookmarks();
+        secondDump();
     }
 };
 chrome.contextMenus.onClicked.addListener(onClickHandler);
@@ -16,23 +13,31 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 
 chrome.runtime.onInstalled.addListener(function() {
     chrome.contextMenus.create({"title": "dumpbookmarks", "id": "dumpbookmarks"});
-    console.log("'" + context + "' item:" + id);
 
-    console.log("About to try creating an invalid item - an error about " +
-        "duplicate item child1 should show up");
-    chrome.contextMenus.create({"title": "Oops", "id": "child1"}, function() {
-        if (chrome.extension.lastError) {
-            console.log("Got expected error: " + chrome.extension.lastError.message);
-        }
-    });
 });
 
+function secondDump() {
+    var subparent;
+    var startNode = chrome.bookmarks.getRecent(1, function(res){
+        subparent = res;
+        while (subparent.parentId){
+            subparent = chrome.bookmarks.get(subparent.parentId)
+            console.log(subparent.title);
+        }
+        console.log("Final Node:");
+        console.log(subparent.id);
+        console.log(subparent.title);
+        console.log(subparent);
+    })
+}
 function dumpBookmarks() {
     var bookmarkTreeNodes = chrome.bookmarks.getTree(
         function(bookmarkTreeNodes) {
-            for (node in bookmarkTreeNodes){
-                console.log(node.title);
-                console.log(node.id)
+
+            for (let bookmarkTreeNode in bookmarkTreeNodes){
+                console.log(bookmarkTreeNode);
+                console.log(bookmarkTreeNode);
+                console.log(bookmarkTreeNode.id)
             }
         });
 }
